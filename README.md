@@ -1,4 +1,4 @@
-#Cashback Calculator
+# Cashback Calculator
 
 A lightweight web tool that calculates weekly cashback based on raw betting data input.
 
