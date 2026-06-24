@@ -20,10 +20,12 @@ function buildClientMessage(fields, pct, cashbackResult) {
   lines.push('');
   lines.push('Deduções aplicadas:');
   lines.push('• Recompensas vendidas/resgatadas: ' + brl(fields.sellAmount));
-  lines.push('• Bônus convertidos em reais: ' + brl(fields.transferAmount));
+  lines.push('• Crédito de recompensa convertidos em reais: ' + brl(fields.transferAmount));
   lines.push('• Cashback anterior: ' + brl(fields.lastCashback));
   lines.push('• Recompensa de reembolso: ' + brl(fields.cashbackReward));
   lines.push('• Recompensa Rakeback: ' + brl(fields.rakebackReward));
+  lines.push('• Rodadas Grátis (Free Spins): ' + brl(fields.freeSpins)); // Adicionado
+  lines.push('• Rakeback Diário: ' + brl(fields.rakeback));             // Adicionado
   lines.push('');
   lines.push('Perdas líquidas: ' + brl(fields.losses));
   lines.push('Seu cashback (' + pct + '): ' + brl(cashbackResult));
@@ -71,7 +73,7 @@ function parse() {
 
   // Correct formula:
   // Losses = real_bet - real_won - sell_amount - transfer_amount - last_week_cashback - cashback_reward_amount - rakeback_reward_amount
-  var losses = realBet - realWon - sellAmount - transferAmount - lastCashback - cashbackReward - rakebackReward;
+  var losses = realBet - realWon - sellAmount - transferAmount - lastCashback - cashbackReward - rakebackReward - freeSpins - rakeback;
   var cashbackResult = losses > 0 ? Math.floor(+(losses * rate).toFixed(4) * 100) / 100 : 0;
 
   var pct = rate > 0 ? (rate * 100).toFixed(0) + '%' : '?%';
@@ -98,7 +100,18 @@ function parse() {
   cbEl.className = 'cb-value' + (cashbackResult > 0 ? ' positive' : ' zero');
 
   // Build and show copy message
-  var fields = { realBet: realBet, realWon: realWon, sellAmount: sellAmount, transferAmount: transferAmount, lastCashback: lastCashback, cashbackReward: cashbackReward, rakebackReward: rakebackReward, losses: losses > 0 ? losses : 0 };
+  var fields = { 
+    realBet: realBet, 
+    realWon: realWon, 
+    sellAmount: sellAmount, 
+    transferAmount: transferAmount, 
+    lastCashback: lastCashback, 
+    cashbackReward: cashbackReward, 
+    rakebackReward: rakebackReward, 
+    freeSpins: freeSpins,
+    rakeback: rakeback, 
+    losses: losses > 0 ? losses : 0 
+  };
   document.getElementById('client-message').value = buildClientMessage(fields, pct, cashbackResult);
 
   document.getElementById('result').style.display = 'block';
