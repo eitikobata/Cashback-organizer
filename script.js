@@ -5,7 +5,9 @@ function brl(value) {
 function getField(text, key) {
   var regex = new RegExp(key + '\\s*=\\s*(-?[\\d.]+)');
   var match = text.match(regex);
-  return match ? parseFloat(match[1]) : 0;
+  if (!match) return 0;
+  var numMatch = match[1].match(/^-?[\d.]+/);
+  return numMatch ? parseFloat(numMatch[0]) : 0;
 }
 
 function buildClientMessage(fields, pct, cashbackResult) {
