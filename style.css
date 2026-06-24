@@ -234,6 +234,52 @@ button.secondary:hover {
   text-decoration: underline;
 }
 
+.value-row.dimmed .vr-label,
+.value-row.dimmed .vr-value {
+  color: #555;
+  font-size: 13px;
+}
+
+/* Copy card */
+
+.copy-card {
+  padding: 22px;
+}
+
+.copy-card textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #2e3050;
+  background: #2a2d45;
+  color: #ddd;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
+  resize: vertical;
+  outline: none;
+  margin-top: 14px;
+}
+
+.copy-btn {
+  margin-top: 12px;
+  background: #059669;
+  width: 100%;
+}
+
+.copy-btn:hover {
+  background: #047857;
+}
+
+.copy-feedback {
+  display: none;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #86efac;
+  text-align: center;
+  display: none;
+}
+
 @media (max-width: 400px) {
   .btn-row {
     grid-template-columns: 1fr;
