@@ -70,7 +70,7 @@ function parse() {
   // Correct formula:
   // Losses = real_bet - real_won - sell_amount - transfer_amount - last_week_cashback - cashback_reward_amount - rakeback_reward_amount
   var losses = realBet - realWon - sellAmount - transferAmount - lastCashback - cashbackReward - rakebackReward;
-  var cashbackResult = losses > 0 ? Math.floor(losses * rate * 100) / 100 : 0;
+  var cashbackResult = losses > 0 ? Math.floor(+(losses * rate).toFixed(4) * 100) / 100 : 0;
 
   var pct = rate > 0 ? (rate * 100).toFixed(0) + '%' : '?%';
 
