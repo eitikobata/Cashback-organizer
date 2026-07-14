@@ -11,6 +11,7 @@
     <h1>Cashback Parser</h1>
     <p class="subtitle">Paste the raw data and get a formatted summary</p>
 
+    <!-- Top: input card -->
     <div class="card">
       <div class="form-group">
         <label for="raw-input">Raw data</label>
@@ -23,82 +24,89 @@
       <div class="error" id="error"></div>
     </div>
 
-    <div class="card result-card" id="result" style="display:none;">
-      <div class="result-header">
-        <span class="result-icon">📊</span>
-        <span class="result-title">Resumo do Cashback</span>
-      </div>
-      <p class="result-intro">O cashback semanal é calculado com base na diferença entre seus ganhos e perdas durante o período, e não sobre o total apostado.</p>
+    <!-- Bottom row: two cards side by side -->
+    <div class="bottom-row" id="bottom-row" style="display:none;">
 
-      <p class="section-label">Vamos aos seus valores:</p>
-      <div class="value-row">
-        <span class="vr-label">Total apostado</span>
-        <span class="vr-value" id="o-bet">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Total ganho</span>
-        <span class="vr-value" id="o-won">—</span>
+      <!-- Left: breakdown -->
+      <div class="card result-card" id="result">
+        <div class="result-header">
+          <span class="result-icon">📊</span>
+          <span class="result-title">Cashback Breakdown</span>
+        </div>
+        <p class="result-intro">The weekly cashback is based on net losses during the period, not on total wagered amount.</p>
+
+        <p class="section-label">Player values:</p>
+        <div class="value-row">
+          <span class="vr-label">Total wagered</span>
+          <span class="vr-value" id="o-bet">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Total won</span>
+          <span class="vr-value" id="o-won">—</span>
+        </div>
+
+        <p class="section-label" style="margin-top:14px;">Deductions:</p>
+        <div class="value-row">
+          <span class="vr-label">Rewards sold / redeemed</span>
+          <span class="vr-value" id="o-sell">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Reward credit converted to cash</span>
+          <span class="vr-value" id="o-transfer">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Previous cashback</span>
+          <span class="vr-value" id="o-cashback">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Cashback reward</span>
+          <span class="vr-value" id="o-cashback-reward">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Rakeback reward</span>
+          <span class="vr-value" id="o-rakeback-reward">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Free spins</span>
+          <span class="vr-value" id="o-freespins">—</span>
+        </div>
+        <div class="value-row">
+          <span class="vr-label">Daily rakeback</span>
+          <span class="vr-value" id="o-rakeback">—</span>
+        </div>
+
+        <div class="divider"></div>
+        <div class="value-row total-row">
+          <span class="vr-label">Net losses</span>
+          <span class="vr-value" id="o-losses">—</span>
+        </div>
+
+        <div class="cashback-highlight">
+          <span class="cb-label" id="cb-label">Cashback</span>
+          <span class="cb-value" id="o-result">R$ 0,00</span>
+        </div>
+
+        <p class="result-footer">This is the final amount available for the player this week.</p>
+        <p class="result-footer">
+          <a href="https://support.blaze-help.com/hc/pt-br/articles/360007716017-Como-funciona-o-cashback-reembolso" target="_blank">
+            How cashback works →
+          </a>
+        </p>
       </div>
 
-      <p class="section-label" style="margin-top:16px;">Deduções aplicadas:</p>
-      <div class="value-row">
-        <span class="vr-label">Recompensas vendidas / resgatadas</span>
-        <span class="vr-value" id="o-sell">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Crédito de recompensa convertidos em reais</span>
-        <span class="vr-value" id="o-transfer">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Cashback anterior</span>
-        <span class="vr-value" id="o-cashback">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Recompensa de reembolso</span>
-        <span class="vr-value" id="o-cashback-reward">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Recompensa Rakeback</span>
-        <span class="vr-value" id="o-rakeback-reward">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Giros grátis</span>
-        <span class="vr-value" id="o-freespins">—</span>
-      </div>
-      <div class="value-row">
-        <span class="vr-label">Rakeback diário</span>
-        <span class="vr-value" id="o-rakeback">—</span>
+      <!-- Right: client message -->
+      <div class="card copy-card" id="copy-section">
+        <div class="result-header">
+          <span class="result-icon">💬</span>
+          <span class="result-title">Customer message</span>
+        </div>
+        <p class="section-label" style="margin-top:12px;">Ready to copy and send (pt-BR)</p>
+        <textarea id="client-message" rows="20" readonly></textarea>
+        <button class="copy-btn" onclick="copyMessage()">Copy message</button>
+        <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
       </div>
 
-      <div class="divider"></div>
-      <div class="value-row total-row">
-        <span class="vr-label">Perdas líquidas</span>
-        <span class="vr-value" id="o-losses">—</span>
-      </div>
-
-      <div class="cashback-highlight">
-        <span class="cb-label" id="cb-label">Seu cashback</span>
-        <span class="cb-value" id="o-result">R$ 0,00</span>
-      </div>
-
-      <p class="result-footer">Esse é o valor final disponível para você nesta semana.</p>
-      <p class="result-footer">Para mais detalhes sobre o cálculo:<br>
-        <a href="https://support.blaze-help.com/hc/pt-br/articles/360007716017-Como-funciona-o-cashback-reembolso" target="_blank">
-          support.blaze-help.com → Como funciona o cashback
-        </a>
-      </p>
     </div>
-
-    <div class="card copy-card" id="copy-section" style="display:none;">
-      <div class="result-header">
-        <span class="result-icon">💬</span>
-        <span class="result-title">Mensagem para o cliente</span>
-      </div>
-      <textarea id="client-message" rows="18" readonly></textarea>
-      <button class="copy-btn" onclick="copyMessage()">Copiar mensagem</button>
-      <span class="copy-feedback" id="copy-feedback">✓ Copiado!</span>
-    </div>
-
   </div>
   <script src="script.js"></script>
 </body>
