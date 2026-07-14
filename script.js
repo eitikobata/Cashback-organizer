@@ -24,8 +24,8 @@ function buildClientMessage(fields, pct, cashbackResult) {
   lines.push('• Cashback anterior: ' + brl(fields.lastCashback));
   lines.push('• Recompensa de reembolso: ' + brl(fields.cashbackReward));
   lines.push('• Recompensa Rakeback: ' + brl(fields.rakebackReward));
-  lines.push('• Rodadas Grátis (Free Spins): ' + brl(fields.freeSpins)); // Adicionado
-  lines.push('• Rakeback Diário: ' + brl(fields.rakeback));             // Adicionado
+  lines.push('• Rodadas Grátis (Free Spins): ' + brl(fields.freeSpins));
+  lines.push('• Rakeback Diário: ' + brl(fields.rakeback));
   lines.push('');
   lines.push('Perdas líquidas: ' + brl(fields.losses));
   lines.push('Seu cashback (' + pct + '): ' + brl(cashbackResult));
@@ -45,8 +45,7 @@ function parse() {
   if (!raw) {
     errorEl.textContent = 'Please paste the raw cashback data before calculating.';
     errorEl.style.display = 'block';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('copy-section').style.display = 'none';
+    document.getElementById('bottom-row').style.display = 'none';
     return;
   }
 
@@ -66,56 +65,50 @@ function parse() {
   if (realBet === 0 && realWon === 0) {
     errorEl.textContent = 'Could not read the data. Make sure the full raw text is pasted correctly.';
     errorEl.style.display = 'block';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('copy-section').style.display = 'none';
+    document.getElementById('bottom-row').style.display = 'none';
     return;
   }
 
-  // Correct formula:
-  // Losses = real_bet - real_won - sell_amount - transfer_amount - last_week_cashback - cashback_reward_amount - rakeback_reward_amount
   var losses = realBet - realWon - sellAmount - transferAmount - lastCashback - cashbackReward - rakebackReward - freeSpins - rakeback;
   var cashbackResult = losses > 0 ? Math.floor(+(losses * rate).toFixed(4) * 100) / 100 : 0;
 
   var pct = rate > 0 ? (rate * 100).toFixed(0) + '%' : '?%';
 
-  // Populate breakdown table
-  document.getElementById('o-bet').textContent           = brl(realBet);
-  document.getElementById('o-won').textContent           = brl(realWon);
-  document.getElementById('o-sell').textContent          = brl(sellAmount);
-  document.getElementById('o-transfer').textContent      = brl(transferAmount);
-  document.getElementById('o-cashback').textContent      = brl(lastCashback);
+  document.getElementById('o-bet').textContent             = brl(realBet);
+  document.getElementById('o-won').textContent             = brl(realWon);
+  document.getElementById('o-sell').textContent            = brl(sellAmount);
+  document.getElementById('o-transfer').textContent        = brl(transferAmount);
+  document.getElementById('o-cashback').textContent        = brl(lastCashback);
   document.getElementById('o-cashback-reward').textContent = brl(cashbackReward);
   document.getElementById('o-rakeback-reward').textContent = brl(rakebackReward);
-  document.getElementById('o-freespins').textContent     = brl(freeSpins);
-  document.getElementById('o-rakeback').textContent      = brl(rakeback);
+  document.getElementById('o-freespins').textContent       = brl(freeSpins);
+  document.getElementById('o-rakeback').textContent        = brl(rakeback);
 
   var lossesEl = document.getElementById('o-losses');
-  lossesEl.textContent = losses > 0 ? brl(losses) : 'R$ 0,00 (sem perdas)';
+  lossesEl.textContent = losses > 0 ? brl(losses) : 'R$ 0,00 (no losses)';
   lossesEl.style.color = losses > 0 ? '#f87171' : '#86efac';
 
-  document.getElementById('cb-label').textContent = 'Seu cashback (' + pct + ')';
+  document.getElementById('cb-label').textContent = 'Cashback (' + pct + ')';
 
   var cbEl = document.getElementById('o-result');
   cbEl.textContent = brl(cashbackResult);
   cbEl.className = 'cb-value' + (cashbackResult > 0 ? ' positive' : ' zero');
 
-  // Build and show copy message
-  var fields = { 
-    realBet: realBet, 
-    realWon: realWon, 
-    sellAmount: sellAmount, 
-    transferAmount: transferAmount, 
-    lastCashback: lastCashback, 
-    cashbackReward: cashbackReward, 
-    rakebackReward: rakebackReward, 
+  var fields = {
+    realBet: realBet,
+    realWon: realWon,
+    sellAmount: sellAmount,
+    transferAmount: transferAmount,
+    lastCashback: lastCashback,
+    cashbackReward: cashbackReward,
+    rakebackReward: rakebackReward,
     freeSpins: freeSpins,
-    rakeback: rakeback, 
-    losses: losses > 0 ? losses : 0 
+    rakeback: rakeback,
+    losses: losses > 0 ? losses : 0
   };
   document.getElementById('client-message').value = buildClientMessage(fields, pct, cashbackResult);
 
-  document.getElementById('result').style.display = 'block';
-  document.getElementById('copy-section').style.display = 'block';
+  document.getElementById('bottom-row').style.display = 'grid';
   document.getElementById('copy-feedback').style.display = 'none';
 }
 
@@ -131,7 +124,6 @@ function copyMessage() {
 
 function clearAll() {
   document.getElementById('raw-input').value = '';
-  document.getElementById('result').style.display = 'none';
-  document.getElementById('copy-section').style.display = 'none';
+  document.getElementById('bottom-row').style.display = 'none';
   document.getElementById('error').style.display = 'none';
 }
