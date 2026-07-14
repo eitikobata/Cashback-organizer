@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-  max-width: 520px;
+  max-width: 1060px;
   margin: 40px auto;
   padding: 20px;
 }
@@ -30,12 +30,27 @@ h1 {
   font-size: 14px;
 }
 
+/* Top input card — centered, narrow */
 .card {
   background: #1f2033;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card:first-of-type {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Bottom row: two cards side by side */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
 }
 
 .form-group {
@@ -113,9 +128,10 @@ button.secondary:hover {
   font-size: 13px;
 }
 
-/* Result card */
+/* Result breakdown card */
 
-.result-card {
+.result-card,
+.copy-card {
   padding: 22px;
 }
 
@@ -127,40 +143,40 @@ button.secondary:hover {
 }
 
 .result-icon {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .result-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
 }
 
 .result-intro {
-  font-size: 13px;
+  font-size: 12px;
   color: #aaa;
   line-height: 1.6;
-  margin: 0 0 16px;
-  padding: 10px 14px;
+  margin: 0 0 14px;
+  padding: 10px 12px;
   background: #2a2d45;
   border-radius: 8px;
   border-left: 3px solid #4f46e5;
 }
 
 .section-label {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #666;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .value-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  font-size: 14px;
+  padding: 5px 0;
+  font-size: 13px;
   border-bottom: 1px solid #2a2d45;
 }
 
@@ -185,7 +201,7 @@ button.secondary:hover {
 .divider {
   height: 1px;
   background: #2e3050;
-  margin: 12px 0;
+  margin: 10px 0;
 }
 
 .cashback-highlight {
@@ -194,18 +210,18 @@ button.secondary:hover {
   align-items: center;
   background: linear-gradient(135deg, #312e81, #3730a3);
   border-radius: 10px;
-  padding: 14px 18px;
-  margin: 16px 0 14px;
+  padding: 12px 16px;
+  margin: 14px 0 12px;
 }
 
 .cb-label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #c7d2fe;
 }
 
 .cb-value {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff;
 }
@@ -219,10 +235,10 @@ button.secondary:hover {
 }
 
 .result-footer {
-  font-size: 12px;
-  color: #777;
+  font-size: 11px;
+  color: #666;
   line-height: 1.6;
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 
 .result-footer a {
@@ -234,37 +250,19 @@ button.secondary:hover {
   text-decoration: underline;
 }
 
-.value-row.dimmed .vr-label,
-.value-row.dimmed .vr-value {
-  color: #555;
-  font-size: 13px;
-}
-
 /* Copy card */
 
-.copy-card {
-  padding: 22px;
-}
-
 .copy-card textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #2e3050;
-  background: #2a2d45;
-  color: #ddd;
-  font-size: 13px;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #ddd;
+  margin-top: 10px;
   line-height: 1.65;
-  resize: vertical;
-  outline: none;
-  margin-top: 14px;
 }
 
 .copy-btn {
   margin-top: 12px;
   background: #059669;
-  width: 100%;
 }
 
 .copy-btn:hover {
@@ -277,10 +275,14 @@ button.secondary:hover {
   font-size: 13px;
   color: #86efac;
   text-align: center;
-  display: none;
 }
 
-@media (max-width: 400px) {
+/* Responsive: stack on small screens */
+@media (max-width: 720px) {
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+
   .btn-row {
     grid-template-columns: 1fr;
   }
